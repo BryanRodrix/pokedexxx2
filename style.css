@@ -1,0 +1,247 @@
+/* --- ESTILOS GENERALES --- */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+/* --- HEADER Y BUSCADOR --- */
+header.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto 20px auto;
+    padding: 0 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.Logo img {
+    height: 50px;
+    object-fit: contain;
+}
+
+header form {
+    display: flex;
+    gap: 10px;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 25px;
+    padding: 8px 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.icon-search {
+    width: 20px;
+    height: 20px;
+    color: #888;
+    margin-right: 8px;
+}
+
+.form-group input {
+    border: none;
+    outline: none;
+    font-size: 0.95rem;
+    background: transparent;
+}
+
+.btn-search {
+    background-color: #fd7d24;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-search:hover {
+    background-color: #e0691b;
+}
+
+/* --- BARRA DE FILTRO SUPERIOR --- */
+.container-filter {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    color: #555;
+}
+
+.icon-filter {
+    background: #fff;
+    padding: 8px;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-filter .icon {
+    width: 20px;
+    height: 20px;
+    color: #495057;
+}
+
+/* --- CONTENEDOR DE TARJETAS (GRID) --- */
+main.card-list-pokemon {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* --- TARJETA DE POKÉMON --- */
+.card-pokemon {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-pokemon:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* --- IMAGEN --- */
+.card-omg img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    max-width: 100%;
+    transition: transform 0.3s ease;
+}
+
+.card-pokemon:hover .card-omg img {
+    transform: scale(1.08);
+}
+
+/* --- INFORMACIÓN --- */
+.card-info {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.pokemon-id {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #888;
+}
+
+.card-info h3 {
+    margin: 8px 0;
+    font-size: 1.25rem;
+    color: #2c3e50;
+    text-transform: capitalize;
+}
+
+/* --- TIPOS DE POKÉMON (BADGES EN TARJETAS) --- */
+.card-types {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.card-types span {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Colores personalizados según el tipo (Actualizados para los 40 pokémon) */
+.card-types .grass { background-color: #9bcc50; }
+.card-types .Poison, .card-types .poison { background-color: #b97fc9; }
+.card-types .fire { background-color: #fd7d24; }
+.card-types .water { background-color: #4592c4; }
+.card-types .bug { background-color: #729f3f; }
+.card-types .normal { background-color: #a4acaf; color: #333 !important; }
+.card-types .flying { background-color: #3dc7be; }
+.card-types .electric { background-color: #eed535; color: #333 !important; }
+.card-types .ground { background-color: #ab9842; }
+.card-types .fairy { background-color: #fdb9e9; color: #333 !important; }
+
+
+/* --- SECCIÓN DE FILTROS (CHECKBOXES) --- */
+.container-filters {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.filter-by-type {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+.filter-by-type > span {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #2c3e50;
+    margin-right: 15px;
+    width: 100%;
+}
+
+.group-type {
+    display: inline-flex;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 8px 14px;
+    border-radius: 30px;
+    border: 1px solid #e9ecef;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.group-type:hover {
+    background: #e9ecef;
+    border-color: #ced4da;
+}
+
+.group-type input[type="checkbox"] {
+    accent-color: #fd7d24;
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.group-type label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #495057;
+    cursor: pointer;
+}

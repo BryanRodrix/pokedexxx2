@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokt</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="container">
+        <a href="/" class="Logo">
+            <img src="img/Logo_Pokedex.png" alt="Logo_Pokedex">
+        </a>
+        <form>
+            <div class="form-group">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="icon-search">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                </svg>
+                <input type="search" placeholder="Buscar nombre de Pokemon">
+            </div>
+            <button class="btn-search">Buscar</button>
+        </form>
+    </header>
+
+    <!-- CONTENEDOR PRINCIPAL PARA DIVIDIR LA BARRA LATERAL Y EL CONTENIDO -->
+    <div class="page-layout">
+
+        <!-- FILTROS AMPLIADOS (BARRA LATERAL IZQUIERDA) -->
+        <aside class="container-filters">
+            <div class="filter-by-type">
+                <span>Tipo</span>
+                <div class="group-type">
+                    <input type="checkbox" name="grass" id="grass">
+                    <label for="grass">Planta</label>
+                </div> 
+
+                <div class="group-type">
+                    <input type="checkbox" name="poison" id="poison">
+                    <label for="poison">Veneno</label>
+                </div> 
+
+                <div class="group-type">
+                    <input type="checkbox" name="fire" id="fire">
+                    <label for="fire">Fuego</label>
+                </div> 
+
+                <div class="group-type">
+                    <input type="checkbox" name="flying" id="flying">
+                    <label for="flying">Volador</label>
+                </div> 
+
+                <div class="group-type">
+                    <input type="checkbox" name="water" id="water">
+                    <label for="water">Agua</label>
+                </div> 
+
+                <div class="group-type">
+                    <input type="checkbox" name="bug" id="bug">
+                    <label for="bug">Bicho</label>
+                </div> 
+
+                <div class="group-type">
+                    <input type="checkbox" name="normal" id="normal">
+                    <label for="normal">Normal</label>
+                </div>
+
+                <div class="group-type">
+                    <input type="checkbox" name="electric" id="electric">
+                    <label for="electric">Eléctrico</label>
+                </div>
+
+                <div class="group-type">
+                    <input type="checkbox" name="ground" id="ground">
+                    <label for="ground">Tierra</label>
+                </div>
+
+                <div class="group-type">
+                    <input type="checkbox" name="fairy" id="fairy">
+                    <label for="fairy">Hada</label>
+                </div>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL (LISTA DE POKÉMON Y FILTRO SUPERIOR) -->
+        <div class="content-main">
+            <div class="container-filter container">
+                <div class="icon-filter">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="icon">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+                    </svg>
+                </div>
+                <span>Filtrar</span>
+            </div>
+
+            <!-- LISTA DE POKÉMON (40 POKÉMON) -->
+            <main class="card-list-pokemon container">
+                <!-- N° 1: Bulbasaur -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png" alt="Pokemon Bulbasaur">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 1</span>
+                        <h3>Bulbasaur</h3>
+                        <div class="card-types">
+                            <span class="grass">Planta</span>
+                            <span class="Poison">Veneno</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 2: Ivysaur -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png" alt="Pokemon Ivysaur">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 2</span>
+                        <h3>Ivysaur</h3>
+                        <div class="card-types">
+                            <span class="grass">Planta</span>
+                            <span class="Poison">Veneno</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 3: Venusaur -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/003.png" alt="Pokemon Venusaur">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 3</span>
+                        <h3>Venusaur</h3>
+                        <div class="card-types">
+                            <span class="grass">Planta</span>
+                            <span class="Poison">Veneno</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 4: Charmander -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/004.png" alt="Pokemon Charmander">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 4</span>
+                        <h3>Charmander</h3>
+                        <div class="card-types">
+                            <span class="fire">Fuego</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 5: Charmeleon -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/005.png" alt="Pokemon Charmeleon">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 5</span>
+                        <h3>Charmeleon</h3>
+                        <div class="card-types">
+                            <span class="fire">Fuego</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 6: Charizard -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/006.png" alt="Pokemon Charizard">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 6</span>
+                        <h3>Charizard</h3>
+                        <div class="card-types">
+                            <span class="fire">Fuego</span>
+                            <span class="flying">Volador</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 7: Squirtle -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/007.png" alt="Pokemon Squirtle">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 7</span>
+                        <h3>Squirtle</h3>
+                        <div class="card-types">
+                            <span class="water">Agua</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 8: Wartortle -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/008.png" alt="Pokemon Wartortle">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 8</span>
+                        <h3>Wartortle</h3>
+                        <div class="card-types">
+                            <span class="water">Agua</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 9: Blastoise -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/009.png" alt="Pokemon Blastoise">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 9</span>
+                        <h3>Blastoise</h3>
+                        <div class="card-types">
+                            <span class="water">Agua</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 10: Caterpie -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/010.png" alt="Pokemon Caterpie">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 10</span>
+                        <h3>Caterpie</h3>
+                        <div class="card-types">
+                            <span class="bug">Bicho</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 11: Metapod -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/011.png" alt="Pokemon Metapod">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 11</span>
+                        <h3>Metapod</h3>
+                        <div class="card-types">
+                            <span class="bug">Bicho</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 12: Butterfree -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/012.png" alt="Pokemon Butterfree">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 12</span>
+                        <h3>Butterfree</h3>
+                        <div class="card-types">
+                            <span class="bug">Bicho</span>
+                            <span class="flying">Volador</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 13: Weedle -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/013.png" alt="Pokemon Weedle">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 13</span>
+                        <h3>Weedle</h3>
+                        <div class="card-types">
+                            <span class="bug">Bicho</span>
+                            <span class="Poison">Veneno</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 14: Kakuna -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/014.png" alt="Pokemon Kakuna">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 14</span>
+                        <h3>Kakuna</h3>
+                        <div class="card-types">
+                            <span class="bug">Bicho</span>
+                            <span class="Poison">Veneno</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 15: Beedrill -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/015.png" alt="Pokemon Beedrill">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 15</span>
+                        <h3>Beedrill</h3>
+                        <div class="card-types">
+                            <span class="bug">Bicho</span>
+                            <span class="Poison">Veneno</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 16: Pidgey -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/016.png" alt="Pokemon Pidgey">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 16</span>
+                        <h3>Pidgey</h3>
+                        <div class="card-types">
+                            <span class="normal">Normal</span>
+                            <span class="flying">Volador</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 17: Pidgeotto -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/017.png" alt="Pokemon Pidgeotto">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 17</span>
+                        <h3>Pidgeotto</h3>
+                        <div class="card-types">
+                            <span class="normal">Normal</span>
+                            <span class="flying">Volador</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 18: Pidgeot -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/018.png" alt="Pokemon Pidgeot">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 18</span>
+                        <h3>Pidgeot</h3>
+                        <div class="card-types">
+                            <span class="normal">Normal</span>
+                            <span class="flying">Volador</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 19: Rattata -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/019.png" alt="Pokemon Rattata">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 19</span>
+                        <h3>Rattata</h3>
+                        <div class="card-types">
+                            <span class="normal">Normal</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 20: Raticate -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/020.png" alt="Pokemon Raticate">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 20</span>
+                        <h3>Raticate</h3>
+                        <div class="card-types">
+                            <span class="normal">Normal</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 21: Spearow -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/021.png" alt="Pokemon Spearow">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 21</span>
+                        <h3>Spearow</h3>
+                        <div class="card-types">
+                            <span class="normal">Normal</span>
+                            <span class="flying">Volador</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 22: Fearow -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/022.png" alt="Pokemon Fearow">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 22</span>
+                        <h3>Fearow</h3>
+                        <div class="card-types">
+                            <span class="normal">Normal</span>
+                            <span class="flying">Volador</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 23: Ekans -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/023.png" alt="Pokemon Ekans">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 23</span>
+                        <h3>Ekans</h3>
+                        <div class="card-types">
+                            <span class="Poison">Veneno</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 24: Arbok -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/024.png" alt="Pokemon Arbok">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 24</span>
+                        <h3>Arbok</h3>
+                        <div class="card-types">
+                            <span class="Poison">Veneno</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 25: Pikachu -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/025.png" alt="Pokemon Pikachu">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 25</span>
+                        <h3>Pikachu</h3>
+                        <div class="card-types">
+                            <span class="electric">Eléctrico</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 26: Raichu -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/026.png" alt="Pokemon Raichu">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 26</span>
+                        <h3>Raichu</h3>
+                        <div class="card-types">
+                            <span class="electric">Eléctrico</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 27: Sandshrew -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/027.png" alt="Pokemon Sandshrew">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 27</span>
+                        <h3>Sandshrew</h3>
+                        <div class="card-types">
+                            <span class="ground">Tierra</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 28: Sandslash -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/028.png" alt="Pokemon Sandslash">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 28</span>
+                        <h3>Sandslash</h3>
+                        <div class="card-types">
+                            <span class="ground">Tierra</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 29: Nidoran♀ -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/029.png" alt="Pokemon Nidoran">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 29</span>
+                        <h3>Nidoran♀</h3>
+                        <div class="card-types">
+                            <span class="Poison">Veneno</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 30: Nidorina -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/030.png" alt="Pokemon Nidorina">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 30</span>
+                        <h3>Nidorina</h3>
+                        <div class="card-types">
+                            <span class="Poison">Veneno</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 31: Nidoqueen -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/031.png" alt="Pokemon Nidoqueen">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 31</span>
+                        <h3>Nidoqueen</h3>
+                        <div class="card-types">
+                            <span class="Poison">Veneno</span>
+                            <span class="ground">Tierra</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 32: Nidoran♂ -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/032.png" alt="Pokemon Nidoran">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 32</span>
+                        <h3>Nidoran♂</h3>
+                        <div class="card-types">
+                            <span class="Poison">Veneno</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 33: Nidorino -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/033.png" alt="Pokemon Nidorino">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 33</span>
+                        <h3>Nidorino</h3>
+                        <div class="card-types">
+                            <span class="Poison">Veneno</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 34: Nidoking -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/034.png" alt="Pokemon Nidoking">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 34</span>
+                        <h3>Nidoking</h3>
+                        <div class="card-types">
+                            <span class="Poison">Veneno</span>
+                            <span class="ground">Tierra</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 35: Clefairy -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/035.png" alt="Pokemon Clefairy">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 35</span>
+                        <h3>Clefairy</h3>
+                        <div class="card-types">
+                            <span class="fairy">Hada</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 36: Clefable -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/036.png" alt="Pokemon Clefable">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 36</span>
+                        <h3>Clefable</h3>
+                        <div class="card-types">
+                            <span class="fairy">Hada</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 37: Vulpix -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/037.png" alt="Pokemon Vulpix">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 37</span>
+                        <h3>Vulpix</h3>
+                        <div class="card-types">
+                            <span class="fire">Fuego</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 38: Ninetales -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/038.png" alt="Pokemon Ninetales">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 38</span>
+                        <h3>Ninetales</h3>
+                        <div class="card-types">
+                            <span class="fire">Fuego</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 39: Jigglypuff -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/039.png" alt="Pokemon Jigglypuff">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 39</span>
+                        <h3>Jigglypuff</h3>
+                        <div class="card-types">
+                            <span class="normal">Normal</span>
+                            <span class="fairy">Hada</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- N° 40: Wigglytuff -->
+                <a href="pokemon.html" class="card-pokemon">
+                    <div class="card-omg">
+                        <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/040.png" alt="Pokemon Wigglytuff">
+                    </div>
+                    <div class="card-info">
+                        <span class="pokemon-id">N° 40</span>
+                        <h3>Wigglytuff</h3>
+                        <div class="card-types">
+                            <span class="normal">Normal</span>
+                            <span class="fairy">Hada</span>
+                        </div>
+                    </div>
+                </a>
+            </main>
+        </div>
+
+    </div>
+</body>
+
+</html>
