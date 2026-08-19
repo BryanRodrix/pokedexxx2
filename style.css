@@ -490,3 +490,477 @@ aside.container-filters {
 #paginacion button:last-child {
     font-size: 25px;
 }
+
+/* =====================================================
+   BOTÓN FAVORITOS
+===================================================== */
+
+.btn-favoritos {
+    background-color: #ffffff;
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 700;
+    cursor: pointer;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+    transition: 
+        transform 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.btn-favoritos:hover {
+    transform: translateY(-2px);
+    background-color: #f8f8f8;
+}
+
+
+/* =====================================================
+   BOTÓN FAVORITOS
+===================================================== */
+
+.btn-favoritos {
+    background-color: #ffffff;
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 700;
+    cursor: pointer;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.btn-favoritos:hover {
+    transform: translateY(-2px);
+    background-color: #f8f8f8;
+}
+
+
+/* =====================================================
+   MODAL DE FAVORITOS
+===================================================== */
+
+#favoritesOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, 0.6);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 2000;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 0.3s ease;
+}
+
+
+/* Cuando se abre */
+
+#favoritesOverlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+
+/* =====================================================
+   TARJETA DEL MODAL DE FAVORITOS
+===================================================== */
+
+#favoritesModal {
+    background-color: #ffffff;
+
+    width: 90%;
+    max-width: 900px;
+
+    max-height: 85vh;
+
+    padding: 25px;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.25);
+
+    position: relative;
+
+    overflow-y: auto;
+
+    transform: scale(0.8);
+
+    transition: transform 0.3s ease;
+}
+
+
+/* Animación al abrir */
+
+#favoritesOverlay.active #favoritesModal {
+    transform: scale(1);
+}
+
+
+/* =====================================================
+   ENCABEZADO DE FAVORITOS
+===================================================== */
+
+#favoritesModal .favoritos-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 20px;
+
+    padding-right: 35px;
+}
+
+#favoritesModal .favoritos-header h2 {
+    margin: 0;
+
+    color: #2c3e50;
+
+    font-size: 22px;
+}
+
+#favoritesModal #favoritesCount {
+    color: #888;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+
+/* =====================================================
+   BOTÓN CERRAR FAVORITOS
+===================================================== */
+
+#closeFavorites {
+    position: absolute;
+
+    top: 15px;
+    right: 15px;
+
+    background: #ececec;
+
+    border: none;
+
+    width: 32px;
+    height: 32px;
+
+    border-radius: 50%;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    z-index: 10;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+#closeFavorites:hover {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+
+/* =====================================================
+   LISTA DE FAVORITOS
+===================================================== */
+
+#favoritesList {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(180px, 1fr));
+
+    gap: 20px;
+}
+
+
+/* =====================================================
+   TARJETA DE POKÉMON FAVORITO
+===================================================== */
+
+#favoritesList .tarjeta-favorito {
+    background-color: #f8f9fa;
+
+    border-radius: 14px;
+
+    padding: 15px;
+
+    text-align: center;
+
+    position: relative;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.06);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+#favoritesList .tarjeta-favorito:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 7px 18px rgba(0, 0, 0, 0.12);
+}
+
+
+/* =====================================================
+   IMAGEN DEL FAVORITO
+===================================================== */
+
+#favoritesList .tarjeta-favorito img {
+    width: 110px;
+    height: 110px;
+
+    object-fit: contain;
+}
+
+
+/* =====================================================
+   NOMBRE DEL FAVORITO
+===================================================== */
+
+#favoritesList .tarjeta-favorito h3 {
+    margin: 8px 0;
+
+    color: #2c3e50;
+
+    text-transform: capitalize;
+}
+
+
+/* =====================================================
+   ID DEL POKÉMON FAVORITO
+===================================================== */
+
+#favoritesList .tarjeta-favorito .pokemon-id {
+    display: block;
+
+    margin-top: 5px;
+
+    color: #888;
+
+    font-size: 0.85rem;
+
+    font-weight: 600;
+}
+
+
+/* =====================================================
+   CORAZÓN
+===================================================== */
+
+.boton-favorito {
+    position: absolute;
+
+    top: 10px;
+    right: 10px;
+
+    width: 38px;
+    height: 38px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background-color: #ffffff;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 5;
+
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.12);
+
+    transition:
+        transform 0.2s ease;
+}
+
+.boton-favorito:hover {
+    transform: scale(1.15);
+}
+
+.boton-favorito.favorito {
+    color: #ff3b5c;
+}
+
+
+/* =====================================================
+   MENSAJE SIN FAVORITOS
+===================================================== */
+
+#noFavorites {
+    text-align: center;
+
+    color: #888;
+
+    padding: 25px;
+
+    margin: 0;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    #favoritesModal {
+        width: 85%;
+
+        padding: 20px;
+
+        max-height: 80vh;
+    }
+
+    #favoritesList {
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 12px;
+    }
+
+    #favoritesList .tarjeta-favorito img {
+        width: 80px;
+        height: 80px;
+    }
+
+}
+
+/* ===================================================== */
+/* ESTILO RETRO POKÉMON (Inspirado en la interfaz clásica)*/
+/* ===================================================== */
+
+/* 1. Fondo general de la página (Amarillo crema retro) */
+body {
+    background-color: #f7f2b8 !important;
+}
+
+/* 2. Estilo para el panel de filtros izquierdo (Verde campo clásico) */
+.container-filters {
+    background-color: #82c954 !important;
+    border: 3px solid #4a8226 !important;
+    border-radius: 8px;
+    box-shadow: 0 4px 0 #3b681d;
+}
+
+.container-filters span,
+.container-filters label {
+    color: #1a330d !important;
+    font-weight: bold;
+}
+
+/* 3. Tarjetas de Pokémon con bordes estilo retro */
+.card-pokemon {
+    background-color: #ffffff !important;
+    border: 3px solid #6b9e42 !important;
+    border-radius: 10px !important;
+    box-shadow: 0 4px 0 #4a8226 !important;
+}
+
+/* 4. Botón de búsqueda y favoritos con tono clásico de los menús */
+.btn-search, 
+#btnFavoritos {
+    background-color: #ffcb05 !important; /* Amarillo clásico Pokémon */
+    color: #2b3b4e !important;
+    border: 2px solid #1a2634 !important;
+    font-weight: bold;
+    box-shadow: 0 3px 0 #1a2634;
+}
+
+.btn-search:hover, 
+#btnFavoritos:hover {
+    background-color: #ffde59 !important;
+}
+
+/* 5. Cabecera (Header) con toque clásico */
+header.container {
+    background-color: #faf5ce;
+    border-bottom: 3px solid #d4cc82;
+    padding-bottom: 15px;
+}
+
+/* ===================================================== */
+/* ESTILO RETRO PARA EL MODAL DE ESTADÍSTICAS            */
+/* ===================================================== */
+
+/* 1. La tarjeta del modal */
+.modal-card {
+    background-color: #faf5ce !important; /* Fondo crema claro estilo menú */
+    border: 4px solid #4a8226 !important;  /* Borde verde clásico */
+    border-radius: 12px !important;
+    box-shadow: 0 6px 0 #2e5217 !important; /* Sombra sólida con relieve */
+}
+
+/* 2. Botón de cerrar (la "X") */
+.close-btn {
+    background-color: #ff5350 !important;
+    color: #ffffff !important;
+    border: 2px solid #b32d2a !important;
+    border-radius: 50%;
+    font-weight: bold;
+    box-shadow: 0 3px 0 #b32d2a;
+}
+
+.close-btn:hover {
+    background-color: #ff7674 !important;
+}
+
+/* 3. Barras de estadísticas con estilo retro y bordes */
+.stat-bar-container {
+    background-color: #e2dca7 !important;
+    border: 2px solid #a8a065 !important;
+    border-radius: 4px !important;
+    overflow: hidden;
+    height: 12px !important;
+}
+
+.stat-bar {
+    background-color: #82c954 !important; /* Verde clásico para el nivel de estadística */
+}
+
+/* 4. Textos y títulos del modal */
+.modal-title {
+    color: #2b3b4e !important;
+    font-weight: bold;
+}
+
+.modal-id {
+    color: #555555 !important;
+    font-weight: bold;
+}

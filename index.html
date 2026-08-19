@@ -40,6 +40,11 @@
 
         </form>
 
+        <!-- BOTÓN FAVORITOS -->
+        <button id="btnFavoritos" class="btn-favoritos">
+            ❤️ Favoritos
+        </button>
+
     </header>
 
 
@@ -109,17 +114,64 @@
         </aside>
 
 
-        <!-- IMPORTANTE: id="listaPokemon" -->
+        <!-- CONTENEDOR DE POKÉMON -->
         <main id="listaPokemon" class="card-list-pokemon container">
         </main>
 
 
     </div>
 
+
+    <!-- PAGINACIÓN -->
     <div id="paginacion"></div>
 
 
-    <!-- MODAL -->
+    <!-- =====================================================
+         MODAL DE FAVORITOS
+    ====================================================== -->
+
+    <div id="favoritesOverlay" class="modal-overlay">
+
+        <div id="favoritesModal" class="favorites-modal">
+
+            <!-- BOTÓN CERRAR -->
+            <button id="closeFavorites" class="close-btn">
+                X
+            </button>
+
+            <!-- TÍTULO -->
+            <div class="favoritos-header">
+
+                <h2>
+                    ❤️ Mis Pokémon favoritos
+                </h2>
+
+                <span id="favoritesCount">
+                    0 favoritos
+                </span>
+
+            </div>
+
+
+            <!-- LISTA DE FAVORITOS -->
+            <div id="favoritesList" class="lista-favoritos">
+            </div>
+
+
+            <!-- MENSAJE CUANDO NO HAY FAVORITOS -->
+            <p id="noFavorites" class="no-favorites">
+                No tienes Pokémon favoritos todavía.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         MODAL PRINCIPAL
+    ====================================================== -->
+
     <div id="modalOverlay" class="modal-overlay">
 
         <div class="modal-card">
@@ -147,7 +199,10 @@
     </div>
 
 
-    <!-- MODAL SECUNDARIO -->
+    <!-- =====================================================
+         MODAL SECUNDARIO
+    ====================================================== -->
+
     <div id="pokemon-modal" class="modal" style="display: none;">
     </div>
 
