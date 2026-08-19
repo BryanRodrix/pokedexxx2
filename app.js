@@ -13,12 +13,23 @@ const modalStats = document.querySelector("#modalStats");
 
 let todosLosPokemones = [];
 
+
+// =====================================================
+// PAGINACIÓN
+// =====================================================
+
+let paginaActual = 1;
+const pokemonesPorPagina = 20;
+
+
 // =====================================================
 // TRADUCCIÓN DE TIPOS AL ESPAÑOL
 // =====================================================
 
 function traducirTipo(tipo) {
+
     const traducciones = {
+
         normal: "normal",
         fire: "fuego",
         water: "agua",
@@ -36,6 +47,7 @@ function traducirTipo(tipo) {
         dragon: "dragón",
         steel: "acero",
         fairy: "hada"
+
     };
 
     return traducciones[tipo] || tipo;
@@ -47,13 +59,16 @@ function traducirTipo(tipo) {
 // =====================================================
 
 function traducirStat(stat) {
+
     const traducciones = {
+
         "hp": "PS",
         "attack": "Ataque",
         "defense": "Defensa",
         "special-attack": "At. Especial",
         "special-defense": "Def. Especial",
         "speed": "Velocidad"
+
     };
 
     return traducciones[stat] || stat;
@@ -61,7 +76,7 @@ function traducirStat(stat) {
 
 
 // =====================================================
-// CARGAR LOS PRIMEROS 40 POKÉMON EN PARALELO
+// CARGAR LOS PRIMEROS 60 POKÉMON
 // =====================================================
 
 async function cargarPokemones() {
@@ -70,7 +85,7 @@ async function cargarPokemones() {
 
         const peticiones = [];
 
-        for (let i = 1; i <= 40; i++) {
+        for (let i = 1; i <= 60; i++) {
 
             peticiones.push(
                 fetch(`https://pokeapi.co/api/v2/pokemon/${i}`)
@@ -79,20 +94,26 @@ async function cargarPokemones() {
 
         }
 
-        todosLosPokemones = await Promise.all(peticiones);
+        todosLosPokemones =
+            await Promise.all(peticiones);
+
+        paginaActual = 1;
 
         mostrarPokemones(todosLosPokemones);
 
     } catch (error) {
 
-        console.error("Error al cargar los pokémones:", error);
+        console.error(
+            "Error al cargar los pokémones:",
+            error
+        );
 
     }
 }
 
 
 // =====================================================
-// RENDERIZAR LAS TARJETAS EN EL DOM
+// RENDERIZAR LAS TARJETAS
 // =====================================================
 
 function mostrarPokemones(pokemones) {
@@ -101,7 +122,26 @@ function mostrarPokemones(pokemones) {
 
     listaPokemon.innerHTML = "";
 
-    pokemones.forEach(pokemon => {
+
+    // =================================================
+    // CALCULAR QUÉ POKÉMON MOSTRAR
+    // =================================================
+
+    const inicio =
+        (paginaActual - 1) * pokemonesPorPagina;
+
+    const fin =
+        inicio + pokemonesPorPagina;
+
+    const pokemonesPagina =
+        pokemones.slice(inicio, fin);
+
+
+    // =================================================
+    // CREAR TARJETAS
+    // =================================================
+
+    pokemonesPagina.forEach(pokemon => {
 
         const tipos = pokemon.types
             .map(t =>
@@ -111,21 +151,25 @@ function mostrarPokemones(pokemones) {
             )
             .join('');
 
-        const pokeId = String(pokemon.id).padStart(3, '0');
+        const pokeId =
+            String(pokemon.id).padStart(3, '0');
 
         const nombreCapitalizado =
             pokemon.name.charAt(0).toUpperCase() +
             pokemon.name.slice(1);
 
-        const div = document.createElement("div");
+        const div =
+            document.createElement("div");
 
         div.classList.add("card-pokemon");
 
         div.innerHTML = `
             <div class="card-img">
+
                 <img 
                     src="${pokemon.sprites.other["official-artwork"].front_default || pokemon.sprites.front_default}" 
                     alt="${pokemon.name}">
+
             </div>
 
             <div class="card-info">
@@ -145,14 +189,169 @@ function mostrarPokemones(pokemones) {
             </div>
         `;
 
+
         // Evento para abrir el modal
         div.addEventListener("click", () => {
+
             abrirModal(pokemon);
+
         });
+
 
         listaPokemon.append(div);
 
     });
+
+
+    // Actualizar botones
+    actualizarPaginacion(pokemones);
+}
+
+
+// =====================================================
+// CREAR / ACTUALIZAR PAGINACIÓN
+// =====================================================
+
+function actualizarPaginacion(pokemones) {
+
+    const paginacion =
+        document.querySelector("#paginacion");
+
+    if (!paginacion) return;
+
+    paginacion.innerHTML = "";
+
+
+    // =================================================
+    // CALCULAR TOTAL DE PÁGINAS
+    // =================================================
+
+    const totalPaginas =
+        Math.ceil(
+            pokemones.length / pokemonesPorPagina
+        );
+
+
+    // Si solo hay una página, ocultar botones
+    if (totalPaginas <= 1) {
+
+        paginacion.style.display = "none";
+
+        return;
+
+    }
+
+
+    paginacion.style.display = "flex";
+
+
+    // =================================================
+    // BOTÓN ANTERIOR
+    // =================================================
+
+    const botonAnterior =
+        document.createElement("button");
+
+    botonAnterior.textContent = "‹";
+
+    botonAnterior.disabled =
+        paginaActual === 1;
+
+    botonAnterior.addEventListener("click", () => {
+
+        if (paginaActual > 1) {
+
+            paginaActual--;
+
+            mostrarPokemones(pokemones);
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+
+    });
+
+    paginacion.appendChild(botonAnterior);
+
+
+    // =================================================
+    // NÚMEROS DE PÁGINA
+    // =================================================
+
+    for (
+        let pagina = 1;
+        pagina <= totalPaginas;
+        pagina++
+    ) {
+
+        const boton =
+            document.createElement("button");
+
+        boton.textContent = pagina;
+
+
+        if (pagina === paginaActual) {
+
+            boton.classList.add("active");
+
+        }
+
+
+        boton.addEventListener("click", () => {
+
+            paginaActual = pagina;
+
+            mostrarPokemones(pokemones);
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        });
+
+
+        paginacion.appendChild(boton);
+
+    }
+
+
+    // =================================================
+    // BOTÓN SIGUIENTE
+    // =================================================
+
+    const botonSiguiente =
+        document.createElement("button");
+
+    botonSiguiente.textContent = "›";
+
+    botonSiguiente.disabled =
+        paginaActual === totalPaginas;
+
+
+    botonSiguiente.addEventListener("click", () => {
+
+        if (paginaActual < totalPaginas) {
+
+            paginaActual++;
+
+            mostrarPokemones(pokemones);
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+
+    });
+
+
+    paginacion.appendChild(botonSiguiente);
+
 }
 
 
@@ -164,6 +363,7 @@ function abrirModal(pokemon) {
 
     if (!modalOverlay) return;
 
+
     if (modalImg) {
 
         modalImg.src =
@@ -172,12 +372,14 @@ function abrirModal(pokemon) {
 
     }
 
+
     if (modalId) {
 
         modalId.textContent =
             `N° ${String(pokemon.id).padStart(3, '0')}`;
 
     }
+
 
     if (modalTitle) {
 
@@ -186,6 +388,7 @@ function abrirModal(pokemon) {
             pokemon.name.slice(1);
 
     }
+
 
     if (modalTypes) {
 
@@ -200,6 +403,7 @@ function abrirModal(pokemon) {
 
     }
 
+
     if (modalStats) {
 
         modalStats.innerHTML = "";
@@ -212,25 +416,39 @@ function abrirModal(pokemon) {
             const valorStat =
                 stat.base_stat;
 
+
             modalStats.innerHTML += `
+
                 <div class="stat-row">
-                    <span>${nombreStat}</span>
-                    <span>${valorStat}</span>
+
+                    <span>
+                        ${nombreStat}
+                    </span>
+
+                    <span>
+                        ${valorStat}
+                    </span>
+
                 </div>
 
                 <div class="stat-bar-container">
+
                     <div 
                         class="stat-bar" 
                         style="width: ${Math.min(valorStat, 100)}%;">
                     </div>
+
                 </div>
+
             `;
 
         });
 
     }
 
+
     modalOverlay.classList.add("active");
+
 }
 
 
@@ -245,6 +463,7 @@ async function abrirModalPorId(id) {
             p => p.id === Number(id)
         );
 
+
     if (pokemonEnmemoria) {
 
         abrirModal(pokemonEnmemoria);
@@ -253,6 +472,7 @@ async function abrirModalPorId(id) {
 
     }
 
+
     try {
 
         const response =
@@ -260,10 +480,13 @@ async function abrirModalPorId(id) {
                 `https://pokeapi.co/api/v2/pokemon/${id}`
             );
 
+
         const pokemon =
             await response.json();
 
+
         abrirModal(pokemon);
+
 
     } catch (error) {
 
@@ -273,6 +496,7 @@ async function abrirModalPorId(id) {
         );
 
     }
+
 }
 
 
@@ -309,42 +533,53 @@ if (modalOverlay) {
 // =====================================================
 // FILTROS ANTIGUOS DEL NAV
 // =====================================================
-// Se mantiene porque ya estaba en tu código.
-// Si en algún momento tienes botones .btn-header,
-// seguirá funcionando.
-// =====================================================
 
 if (navFilter) {
 
     navFilter.addEventListener("click", (e) => {
 
-        if (!e.target.classList.contains("btn-header")) return;
+        if (!e.target.classList.contains("btn-header")) {
+            return;
+        }
+
 
         const botones =
             navFilter.querySelectorAll(".btn-header");
+
 
         botones.forEach(btn =>
             btn.classList.remove("active")
         );
 
+
         e.target.classList.add("active");
+
 
         const tipoSeleccionado =
             e.target.getAttribute("data-type");
 
+
+        paginaActual = 1;
+
+
         if (tipoSeleccionado === "all") {
 
-            mostrarPokemones(todosLosPokemones);
+            mostrarPokemones(
+                todosLosPokemones
+            );
 
         } else {
 
             const filtrados =
-                todosLosPokemones.filter(pokemon =>
-                    pokemon.types.some(
-                        t =>
-                            t.type.name === tipoSeleccionado
-                    )
+                todosLosPokemones.filter(
+                    pokemon =>
+                        pokemon.types.some(
+                            t =>
+                                t.type.name ===
+                                tipoSeleccionado
+                        )
                 );
+
 
             mostrarPokemones(filtrados);
 
@@ -356,10 +591,11 @@ if (navFilter) {
 
 
 // =====================================================
-// NUEVOS FILTROS POR CHECKBOX
+// FILTROS POR CHECKBOX
 // =====================================================
 
 const checkboxesTipos = [
+
     "grass",
     "poison",
     "fire",
@@ -370,21 +606,24 @@ const checkboxesTipos = [
     "electric",
     "ground",
     "fairy"
+
 ];
 
 
 // =====================================================
-// OBTENER LOS TIPOS SELECCIONADOS
+// OBTENER TIPOS SELECCIONADOS
 // =====================================================
 
 function obtenerTiposSeleccionados() {
 
     const tiposSeleccionados = [];
 
+
     checkboxesTipos.forEach(tipo => {
 
         const checkbox =
             document.getElementById(tipo);
+
 
         if (checkbox && checkbox.checked) {
 
@@ -394,7 +633,9 @@ function obtenerTiposSeleccionados() {
 
     });
 
+
     return tiposSeleccionados;
+
 }
 
 
@@ -404,20 +645,29 @@ function obtenerTiposSeleccionados() {
 
 function aplicarFiltros() {
 
+    // Volver a página 1 cuando se cambia el filtro
+    paginaActual = 1;
+
+
     const tiposSeleccionados =
         obtenerTiposSeleccionados();
 
+
     const termino =
         searchInput
-            ? searchInput.value.toLowerCase().trim()
+            ? searchInput.value
+                .toLowerCase()
+                .trim()
             : "";
 
-    let filtrados = todosLosPokemones;
+
+    let filtrados =
+        todosLosPokemones;
 
 
-    // -------------------------------------------------
+    // =================================================
     // FILTRO POR TIPO
-    // -------------------------------------------------
+    // =================================================
 
     if (tiposSeleccionados.length > 0) {
 
@@ -436,9 +686,9 @@ function aplicarFiltros() {
     }
 
 
-    // -------------------------------------------------
+    // =================================================
     // FILTRO POR BUSCADOR
-    // -------------------------------------------------
+    // =================================================
 
     if (termino !== "") {
 
@@ -451,6 +701,7 @@ function aplicarFiltros() {
                 const id =
                     String(pokemon.id);
 
+
                 return (
                     nombre.includes(termino) ||
                     id.includes(termino)
@@ -461,9 +712,9 @@ function aplicarFiltros() {
     }
 
 
-    // -------------------------------------------------
+    // =================================================
     // MOSTRAR RESULTADOS
-    // -------------------------------------------------
+    // =================================================
 
     mostrarPokemones(filtrados);
 
@@ -471,13 +722,14 @@ function aplicarFiltros() {
 
 
 // =====================================================
-// ACTIVAR LOS CHECKBOX DE TIPOS
+// ACTIVAR CHECKBOX DE TIPOS
 // =====================================================
 
 checkboxesTipos.forEach(tipo => {
 
     const checkbox =
         document.getElementById(tipo);
+
 
     if (checkbox) {
 
@@ -493,7 +745,7 @@ checkboxesTipos.forEach(tipo => {
 
 
 // =====================================================
-// BARRA DE BÚSQUEDA EN TIEMPO REAL
+// BARRA DE BÚSQUEDA
 // =====================================================
 
 if (searchInput) {
@@ -525,6 +777,7 @@ if (searchInput) {
 
     const form =
         searchInput.closest("form");
+
 
     if (form) {
 

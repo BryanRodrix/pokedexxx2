@@ -425,3 +425,68 @@ aside.container-filters {
     background-color: #78c850;
     border-radius: 4px;
 }
+
+
+/* =====================================================
+   PAGINACIÓN
+===================================================== */
+
+#paginacion {
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 30px auto 40px auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 12px;
+
+    clear: both;
+}
+
+#paginacion button {
+    width: 45px;
+    height: 45px;
+
+    border: none;
+    border-radius: 10px;
+
+    background-color: #ffffff;
+    color: #333;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+
+    transition: 
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+#paginacion button:hover {
+    transform: translateY(-3px);
+}
+
+#paginacion button.active {
+    background-color: #333;
+    color: #ffffff;
+}
+
+#paginacion button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Flechas */
+
+#paginacion button:first-child,
+#paginacion button:last-child {
+    font-size: 25px;
+}
