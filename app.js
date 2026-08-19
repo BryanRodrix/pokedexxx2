@@ -39,6 +39,7 @@ function traducirStat(stat) {
 
 // Cargar los primeros 40 Pokémon en paralelo para mayor velocidad
 async function cargarPokemones() {
+    
     try {
         const peticiones = [];
         for (let i = 1; i <= 40; i++) {
@@ -191,3 +192,26 @@ if (searchInput) {
 
 // Inicializar la aplicación
 cargarPokemones();
+
+// Barra de búsqueda en tiempo real
+if (searchInput) {
+    // Evitar que el formulario recargue la página al presionar Enter
+    const form = searchInput.closest("form");
+    if (form) {
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+        });
+    }
+
+    searchInput.addEventListener("input", (e) => {
+        const termino = e.target.value.toLowerCase().trim();
+
+        const filtrados = todosLosPokemones.filter(pokemon => {
+            const nombre = pokemon.name.toLowerCase();
+            const id = String(pokemon.id);
+            return nombre.includes(termino) || id.includes(termino);
+        });
+
+        mostrarPokemones(filtrados);
+    });
+}
