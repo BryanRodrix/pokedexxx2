@@ -97,6 +97,7 @@ const checkboxesTipos = [
     "psychic",
     "rock",
     "ghost",
+    "dark",
     "dragon",
     "steel"
 ];
@@ -178,10 +179,10 @@ function traducirTipo(tipo) {
         bug: "bicho",
         rock: "roca",
         ghost: "fantasma",
+        dark: "siniestro",
         dragon: "dragón",
         steel: "acero",
         fairy: "hada"
-
     };
 
     return traducciones[tipo] || tipo;
@@ -520,11 +521,10 @@ function mostrarPokemones(pokemones) {
 
                 <button
                     class="boton-favorito ${esFav ? "favorito" : ""}"
-                    title="${
-                        esFav
-                            ? "Quitar de favoritos"
-                            : "Agregar a favoritos"
-                    }">
+                    title="${esFav
+                    ? "Quitar de favoritos"
+                    : "Agregar a favoritos"
+                }">
 
                     ${corazon}
 
@@ -973,13 +973,12 @@ function abrirModal(pokemon) {
     if (modalId) {
 
         modalId.textContent =
-            `N° ${
-                String(
-                    pokemon.id
-                ).padStart(
-                    3,
-                    "0"
-                )
+            `N° ${String(
+                pokemon.id
+            ).padStart(
+                3,
+                "0"
+            )
             }`;
 
     }
@@ -1330,41 +1329,39 @@ function aplicarFiltros() {
 
 
     // =================================================
-    // FILTRO POR NOMBRE O ID
-    // =================================================
+// FILTRO POR NOMBRE O NÚMERO EXACTO DE POKÉDEX
+// =================================================
 
-    if (
-        termino !== ""
-    ) {
+if (termino !== "") {
 
-        filtrados =
-            filtrados.filter(
-                pokemon => {
+    filtrados = filtrados.filter(
+        pokemon => {
 
-                    const nombre =
-                        pokemon.name.toLowerCase();
+            const nombre =
+                pokemon.name.toLowerCase();
 
+            // Convertir lo escrito a número
+            const numeroBuscado =
+                Number(termino);
 
-                    const id =
-                        String(
-                            pokemon.id
-                        );
+            // Comprobar si está buscando por número
+            const buscaNumero =
+                /^\d+$/.test(termino);
 
+            // Buscar por nombre
+            if (!buscaNumero) {
 
-                    return (
-                        nombre.includes(
-                            termino
-                        ) ||
-                        id.includes(
-                            termino
-                        )
-                    );
+                return nombre.includes(termino);
 
-                }
-            );
+            }
 
-    }
+            // Buscar por número exacto
+            return pokemon.id === numeroBuscado;
 
+        }
+    );
+
+}
 
     // =================================================
     // MOSTRAR RESULTADOS

@@ -1,6 +1,5 @@
-/* =====================================================
-   ESTILOS GENERALES
-===================================================== */
+/*ESTILOS GENERALES*/
+
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -11,9 +10,7 @@ body {
 }
 
 
-/* =====================================================
-   HEADER Y BUSCADOR
-===================================================== */
+/*   HEADER Y BUSCADOR */
 
 header.container {
     display: flex;
@@ -79,9 +76,7 @@ header form {
 }
 
 
-/* =====================================================
-   BOTÓN FAVORITOS
-===================================================== */
+/*    BOTÓN FAVORITOS */
 
 .btn-favoritos {
     background-color: #ffcb05 !important;
@@ -103,9 +98,7 @@ header form {
 }
 
 
-/* =====================================================
-   LAYOUT PRINCIPAL
-===================================================== */
+/*    LAYOUT PRINCIPAL */
 
 .page-layout {
     display: flex;
@@ -120,10 +113,7 @@ header form {
 }
 
 
-/* =====================================================
-   CONTENEDOR DE FILTROS
-===================================================== */
-
+/*    CONTENEDOR DE FILTRO */
 .container-filter {
     max-width: 1200px;
     margin: 0 auto 20px auto;
@@ -152,10 +142,7 @@ header form {
 }
 
 
-/* =====================================================
-   PANEL LATERAL DE FILTROS
-===================================================== */
-
+/*    PANEL LATERAL DE FILTROS */
 aside.container-filters {
     width: 260px;
     margin: 0;
@@ -219,9 +206,7 @@ aside.container-filters {
 }
 
 
-/* =====================================================
-   CONTENEDOR DE TARJETAS
-===================================================== */
+/*    CONTENEDOR DE TARJETAS */
 
 main.card-list-pokemon {
     display: grid;
@@ -233,9 +218,7 @@ main.card-list-pokemon {
 }
 
 
-/* =====================================================
-   TARJETA DE POKÉMON
-===================================================== */
+/*    TARJETA DE POKÉMON */
 
 .card-pokemon {
     background-color: #ffffff !important;
@@ -267,10 +250,7 @@ main.card-list-pokemon {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12) !important;
 }
 
-
-/* =====================================================
-   IMAGEN DE POKÉMON
-===================================================== */
+/* IMAGEN DE POKÉMON*/
 
 .card-img img {
     width: 120px;
@@ -285,9 +265,7 @@ main.card-list-pokemon {
 }
 
 
-/* =====================================================
-   INFORMACIÓN DE TARJETA
-===================================================== */
+/*INFORMACIÓN DE TARJETA*/
 
 .card-info {
     width: 100%;
@@ -411,6 +389,9 @@ main.card-list-pokemon {
 /* Fantasma */
 .card-types .ghost {
     background-color: #7b62a3;
+}
+.card-types .dark {
+    background-color: #707070;
 }
 
 /* Dragón */
