@@ -1,22 +1,32 @@
-/* --- ESTILOS GENERALES --- */
+/* =====================================================
+   ESTILOS GENERALES
+===================================================== */
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f2f5;
+    background-color: #f7f2b8;
     color: #333;
     margin: 0;
     padding: 20px;
 }
 
-/* --- HEADER Y BUSCADOR --- */
+
+/* =====================================================
+   HEADER Y BUSCADOR
+===================================================== */
+
 header.container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     max-width: 1200px;
     margin: 0 auto 20px auto;
-    padding: 0 20px;
+    padding: 0 20px 15px 20px;
     flex-wrap: wrap;
     gap: 15px;
+
+    background-color: #faf5ce;
+    border-bottom: 3px solid #d4cc82;
 }
 
 .Logo img {
@@ -35,7 +45,7 @@ header form {
     background: #fff;
     border-radius: 25px;
     padding: 8px 15px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .icon-search {
@@ -53,21 +63,50 @@ header form {
 }
 
 .btn-search {
-    background-color: #fd7d24;
-    color: white;
-    border: none;
+    background-color: #ffcb05 !important;
+    color: #2b3b4e !important;
+    border: 2px solid #1a2634 !important;
     padding: 10px 20px;
     border-radius: 25px;
-    font-weight: 600;
+    font-weight: bold;
     cursor: pointer;
+    box-shadow: 0 3px 0 #1a2634;
     transition: background 0.2s;
 }
 
 .btn-search:hover {
-    background-color: #e0691b;
+    background-color: #ffde59 !important;
 }
 
-/* --- LAYOUT PRINCIPAL (SIDEBAR + GRID) --- */
+
+/* =====================================================
+   BOTÓN FAVORITOS
+===================================================== */
+
+.btn-favoritos {
+    background-color: #ffcb05 !important;
+    color: #2b3b4e !important;
+    border: 2px solid #1a2634 !important;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 3px 0 #1a2634;
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.btn-favoritos:hover {
+    transform: translateY(-2px);
+    background-color: #ffde59 !important;
+}
+
+
+/* =====================================================
+   LAYOUT PRINCIPAL
+===================================================== */
+
 .page-layout {
     display: flex;
     max-width: 1200px;
@@ -80,7 +119,11 @@ header form {
     flex: 1;
 }
 
-/* --- BARRA DE FILTRO SUPERIOR --- */
+
+/* =====================================================
+   CONTENEDOR DE FILTROS
+===================================================== */
+
 .container-filter {
     max-width: 1200px;
     margin: 0 auto 20px auto;
@@ -96,7 +139,7 @@ header form {
     background: #fff;
     padding: 8px;
     border-radius: 50%;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -108,112 +151,27 @@ header form {
     color: #495057;
 }
 
-/* --- CONTENEDOR DE TARJETAS (GRID) --- */
-main.card-list-pokemon {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0;
-}
 
-/* --- TARJETA DE POKÉMON --- */
-.card-pokemon {
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 20px;
-    text-align: center;
-    text-decoration: none;
-    color: inherit;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-}
+/* =====================================================
+   PANEL LATERAL DE FILTROS
+===================================================== */
 
-.card-pokemon:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-}
-
-/* --- IMAGEN EN TARJETA --- */
-.card-img img {
-    width: 120px;
-    height: 120px;
-    object-fit: contain;
-    max-width: 100%;
-    transition: transform 0.3s ease;
-}
-
-.card-pokemon:hover .card-img img {
-    transform: scale(1.08);
-}
-
-/* --- INFORMACIÓN DE TARJETA --- */
-.card-info {
-    width: 100%;
-    margin-top: 10px;
-}
-
-.pokemon-id {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #888;
-}
-
-.card-info h3 {
-    margin: 8px 0;
-    font-size: 1.25rem;
-    color: #2c3e50;
-    text-transform: capitalize;
-}
-
-/* --- TIPOS DE POKÉMON (BADGES) --- */
-.card-types {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 10px;
-    flex-wrap: wrap;
-}
-
-.card-types span {
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: #fff;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-/* Colores personalizados según el tipo */
-.card-types .grass { background-color: #9bcc50; }
-.card-types .Poison, .card-types .poison { background-color: #b97fc9; }
-.card-types .fire { background-color: #fd7d24; }
-.card-types .water { background-color: #4592c4; }
-.card-types .bug { background-color: #729f3f; }
-.card-types .normal { background-color: #a4acaf; color: #333 !important; }
-.card-types .flying { background-color: #3dc7be; }
-.card-types .electric { background-color: #eed535; color: #333 !important; }
-.card-types .ground { background-color: #ab9842; }
-.card-types .fairy { background-color: #fdb9e9; color: #333 !important; }
-
-/* --- SECCIÓN DE FILTROS (CHECKBOXES / ASIDE) --- */
 aside.container-filters {
     width: 260px;
     margin: 0;
     padding: 0;
+
+    background-color: #82c954 !important;
+    border: 3px solid #4a8226 !important;
+    border-radius: 8px;
+    box-shadow: 0 4px 0 #3b681d;
 }
 
 .filter-by-type {
-    background: #ffffff;
+    background: transparent;
     padding: 20px;
     border-radius: 16px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -222,7 +180,7 @@ aside.container-filters {
 .filter-by-type > span {
     font-weight: 700;
     font-size: 1.1rem;
-    color: #2c3e50;
+    color: #1a330d !important;
     margin-bottom: 5px;
     width: 100%;
 }
@@ -256,11 +214,220 @@ aside.container-filters {
 .group-type label {
     font-size: 0.9rem;
     font-weight: 600;
-    color: #495057;
+    color: #1a330d !important;
     cursor: pointer;
 }
 
-/* --- SECCIÓN DE ESTADÍSTICAS --- */
+
+/* =====================================================
+   CONTENEDOR DE TARJETAS
+===================================================== */
+
+main.card-list-pokemon {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+
+/* =====================================================
+   TARJETA DE POKÉMON
+===================================================== */
+
+.card-pokemon {
+    background-color: #ffffff !important;
+    border: 3px solid #6b9e42 !important;
+    border-radius: 10px !important;
+
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+
+    box-shadow: 0 4px 0 #4a8226 !important;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    cursor: pointer;
+
+    position: relative;
+}
+
+.card-pokemon:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12) !important;
+}
+
+
+/* =====================================================
+   IMAGEN DE POKÉMON
+===================================================== */
+
+.card-img img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    max-width: 100%;
+    transition: transform 0.3s ease;
+}
+
+.card-pokemon:hover .card-img img {
+    transform: scale(1.08);
+}
+
+
+/* =====================================================
+   INFORMACIÓN DE TARJETA
+===================================================== */
+
+.card-info {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.pokemon-id {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #888;
+}
+
+.card-info h3 {
+    margin: 8px 0;
+    font-size: 1.25rem;
+    color: #2c3e50;
+    text-transform: capitalize;
+}
+
+
+/* =====================================================
+   TIPOS DE POKÉMON
+===================================================== */
+
+.card-types {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.card-types span {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+
+/* =====================================================
+   COLORES DE TODOS LOS TIPOS
+===================================================== */
+
+/* Planta */
+.card-types .grass {
+    background-color: #9bcc50;
+}
+
+/* Veneno */
+.card-types .poison {
+    background-color: #b97fc9;
+}
+
+/* Fuego */
+.card-types .fire {
+    background-color: #fd7d24;
+}
+
+/* Agua */
+.card-types .water {
+    background-color: #4592c4;
+}
+
+/* Bicho */
+.card-types .bug {
+    background-color: #729f3f;
+}
+
+/* Normal */
+.card-types .normal {
+    background-color: #a4acaf;
+    color: #333 !important;
+}
+
+/* Volador */
+.card-types .flying {
+    background-color: #3dc7be;
+}
+
+/* Eléctrico */
+.card-types .electric {
+    background-color: #eed535;
+    color: #333 !important;
+}
+
+/* Tierra */
+.card-types .ground {
+    background-color: #ab9842;
+}
+
+/* Hada */
+.card-types .fairy {
+    background-color: #fdb9e9;
+    color: #333 !important;
+}
+
+/* Hielo */
+.card-types .ice {
+    background-color: #51c4e7;
+}
+
+/* Lucha */
+.card-types .fighting {
+    background-color: #d56723;
+}
+
+/* Psíquico */
+.card-types .psychic {
+    background-color: #f366b9;
+}
+
+/* Roca */
+.card-types .rock {
+    background-color: #a38c21;
+}
+
+/* Fantasma */
+.card-types .ghost {
+    background-color: #7b62a3;
+}
+
+/* Dragón */
+.card-types .dragon {
+    background-color: #53a4cf;
+}
+
+/* Acero */
+.card-types .steel {
+    background-color: #9eb7b8;
+}
+
+
+/* =====================================================
+   ESTADÍSTICAS
+===================================================== */
+
 .container-stats {
     background-color: #f8f9fa;
     padding: 25px;
@@ -311,20 +478,30 @@ aside.container-filters {
     text-align: right;
 }
 
-/* --- MODAL --- */
+
+/* =====================================================
+   MODAL PRINCIPAL
+===================================================== */
+
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
+
     width: 100%;
     height: 100%;
+
     background-color: rgba(0, 0, 0, 0.6);
+
     display: flex;
     justify-content: center;
     align-items: center;
+
     z-index: 1000;
+
     opacity: 0;
     pointer-events: none;
+
     transition: opacity 0.3s ease;
 }
 
@@ -334,16 +511,24 @@ aside.container-filters {
 }
 
 .modal-card {
-    background-color: #ffffff;
+    background-color: #faf5ce !important;
+
+    border: 4px solid #4a8226 !important;
+    border-radius: 12px !important;
+
     padding: 2rem;
-    border-radius: 1.5rem;
+
     width: 90%;
     max-width: 400px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+
+    box-shadow: 0 6px 0 #2e5217 !important;
+
     position: relative;
+
     display: flex;
     flex-direction: column;
     align-items: center;
+
     transform: scale(0.8);
     transition: transform 0.3s ease;
 }
@@ -352,52 +537,88 @@ aside.container-filters {
     transform: scale(1);
 }
 
+
+/* =====================================================
+   BOTÓN CERRAR
+===================================================== */
+
 .close-btn {
     position: absolute;
+
     top: 1rem;
     right: 1rem;
-    background: #ececec;
-    border: none;
+
+    background-color: #ff5350 !important;
+    color: #ffffff !important;
+
+    border: 2px solid #b32d2a !important;
+
     width: 30px;
     height: 30px;
+
     border-radius: 50%;
+
     font-weight: bold;
     cursor: pointer;
     font-size: 1rem;
+
+    box-shadow: 0 3px 0 #b32d2a;
 }
 
 .close-btn:hover {
-    background: #000;
-    color: #fff;
+    background-color: #ff7674 !important;
 }
+
+
+/* =====================================================
+   IMAGEN DEL MODAL
+===================================================== */
 
 .modal-img {
     width: 140px;
     height: 140px;
+
     object-fit: contain;
+
     background-color: #f7f7f7;
     border-radius: 50%;
+
     padding: 10px;
     margin-bottom: 1rem;
 }
 
+
+/* =====================================================
+   TÍTULO DEL MODAL
+===================================================== */
+
 .modal-title {
     font-size: 1.5rem;
     text-transform: capitalize;
+
     margin-bottom: 0.5rem;
-    color: #333;
+
+    color: #2b3b4e !important;
+    font-weight: bold;
 }
 
 .modal-id {
-    color: #777;
+    color: #555555 !important;
     font-weight: bold;
     margin-bottom: 0.5rem;
 }
 
+
+/* =====================================================
+   ESTADÍSTICAS DEL MODAL
+===================================================== */
+
 .modal-stats {
     width: 100%;
+
     display: flex;
     flex-direction: column;
+
     gap: 0.4rem;
     margin-top: 1rem;
 }
@@ -405,24 +626,35 @@ aside.container-filters {
 .stat-row {
     display: flex;
     justify-content: space-between;
+
     font-size: 0.85rem;
     font-weight: 600;
+
     color: #555;
     text-transform: capitalize;
 }
 
 .stat-bar-container {
-    background-color: #ececec;
-    height: 8px;
-    border-radius: 4px;
+    background-color: #e2dca7 !important;
+
+    border: 2px solid #a8a065 !important;
+
+    height: 12px !important;
+
+    border-radius: 4px !important;
+
     width: 100%;
+
     overflow: hidden;
+
     margin-bottom: 0.4rem;
 }
 
 .stat-bar {
     height: 100%;
-    background-color: #78c850;
+
+    background-color: #82c954 !important;
+
     border-radius: 4px;
 }
 
@@ -438,6 +670,7 @@ aside.container-filters {
     margin: 30px auto 40px auto;
 
     display: flex;
+
     justify-content: center;
     align-items: center;
 
@@ -454,6 +687,7 @@ aside.container-filters {
     border-radius: 10px;
 
     background-color: #ffffff;
+
     color: #333;
 
     font-size: 17px;
@@ -461,9 +695,10 @@ aside.container-filters {
 
     cursor: pointer;
 
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+    box-shadow:
+        0 3px 8px rgba(0, 0, 0, 0.12);
 
-    transition: 
+    transition:
         transform 0.2s ease,
         background-color 0.2s ease,
         color 0.2s ease;
@@ -484,62 +719,15 @@ aside.container-filters {
     transform: none;
 }
 
-/* Flechas */
-
 #paginacion button:first-child,
 #paginacion button:last-child {
     font-size: 25px;
 }
 
-/* =====================================================
-   BOTÓN FAVORITOS
-===================================================== */
-
-.btn-favoritos {
-    background-color: #ffffff;
+.puntos-paginacion {
+    font-weight: bold;
     color: #333;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 25px;
-    font-weight: 700;
-    cursor: pointer;
-
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-
-    transition: 
-        transform 0.2s ease,
-        background-color 0.2s ease;
-}
-
-.btn-favoritos:hover {
-    transform: translateY(-2px);
-    background-color: #f8f8f8;
-}
-
-
-/* =====================================================
-   BOTÓN FAVORITOS
-===================================================== */
-
-.btn-favoritos {
-    background-color: #ffffff;
-    color: #333;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 25px;
-    font-weight: 700;
-    cursor: pointer;
-
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-
-    transition:
-        transform 0.2s ease,
-        background-color 0.2s ease;
-}
-
-.btn-favoritos:hover {
-    transform: translateY(-2px);
-    background-color: #f8f8f8;
+    padding: 0 5px;
 }
 
 
@@ -549,6 +737,7 @@ aside.container-filters {
 
 #favoritesOverlay {
     position: fixed;
+
     top: 0;
     left: 0;
 
@@ -558,6 +747,7 @@ aside.container-filters {
     background-color: rgba(0, 0, 0, 0.6);
 
     display: flex;
+
     justify-content: center;
     align-items: center;
 
@@ -568,9 +758,6 @@ aside.container-filters {
 
     transition: opacity 0.3s ease;
 }
-
-
-/* Cuando se abre */
 
 #favoritesOverlay.active {
     opacity: 1;
@@ -605,9 +792,6 @@ aside.container-filters {
 
     transition: transform 0.3s ease;
 }
-
-
-/* Animación al abrir */
 
 #favoritesOverlay.active #favoritesModal {
     transform: scale(1);
@@ -666,7 +850,6 @@ aside.container-filters {
     border-radius: 50%;
 
     font-weight: bold;
-
     cursor: pointer;
 
     font-size: 14px;
@@ -699,7 +882,7 @@ aside.container-filters {
 
 
 /* =====================================================
-   TARJETA DE POKÉMON FAVORITO
+   TARJETA FAVORITO
 ===================================================== */
 
 #favoritesList .tarjeta-favorito {
@@ -732,7 +915,7 @@ aside.container-filters {
 
 
 /* =====================================================
-   IMAGEN DEL FAVORITO
+   IMAGEN FAVORITO
 ===================================================== */
 
 #favoritesList .tarjeta-favorito img {
@@ -744,7 +927,7 @@ aside.container-filters {
 
 
 /* =====================================================
-   NOMBRE DEL FAVORITO
+   NOMBRE FAVORITO
 ===================================================== */
 
 #favoritesList .tarjeta-favorito h3 {
@@ -757,7 +940,7 @@ aside.container-filters {
 
 
 /* =====================================================
-   ID DEL POKÉMON FAVORITO
+   ID FAVORITO
 ===================================================== */
 
 #favoritesList .tarjeta-favorito .pokemon-id {
@@ -774,7 +957,7 @@ aside.container-filters {
 
 
 /* =====================================================
-   CORAZÓN
+   CORAZÓN DE FAVORITOS
 ===================================================== */
 
 .boton-favorito {
@@ -835,16 +1018,105 @@ aside.container-filters {
 
 
 /* =====================================================
+   MENSAJES DE RESULTADOS
+===================================================== */
+
+.sin-resultados,
+.error-pokemon {
+    grid-column: 1 / -1;
+
+    background: #ffffff;
+
+    border-radius: 15px;
+
+    padding: 40px;
+
+    text-align: center;
+
+    border: 3px solid #6b9e42;
+
+    box-shadow: 0 4px 0 #4a8226;
+}
+
+.sin-resultados h2,
+.error-pokemon h2 {
+    color: #2c3e50;
+}
+
+.sin-resultados p,
+.error-pokemon p {
+    color: #777;
+}
+
+
+/* =====================================================
    RESPONSIVE
 ===================================================== */
 
+@media (max-width: 900px) {
+
+    .page-layout {
+        flex-direction: column;
+    }
+
+    aside.container-filters {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    main.card-list-pokemon {
+        width: 100%;
+    }
+
+}
+
+
 @media (max-width: 600px) {
+
+    body {
+        padding: 10px;
+    }
+
+    header.container {
+        justify-content: center;
+    }
+
+    header form {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .form-group {
+        flex: 1;
+    }
+
+    .btn-search {
+        padding: 10px 15px;
+    }
+
+    .btn-favoritos {
+        width: 100%;
+    }
+
+    main.card-list-pokemon {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 12px;
+    }
+
+    .card-pokemon {
+        padding: 12px;
+    }
+
+    .card-img img {
+        width: 100px;
+        height: 100px;
+    }
 
     #favoritesModal {
         width: 85%;
-
         padding: 20px;
-
         max-height: 80vh;
     }
 
@@ -860,107 +1132,4 @@ aside.container-filters {
         height: 80px;
     }
 
-}
-
-/* ===================================================== */
-/* ESTILO RETRO POKÉMON (Inspirado en la interfaz clásica)*/
-/* ===================================================== */
-
-/* 1. Fondo general de la página (Amarillo crema retro) */
-body {
-    background-color: #f7f2b8 !important;
-}
-
-/* 2. Estilo para el panel de filtros izquierdo (Verde campo clásico) */
-.container-filters {
-    background-color: #82c954 !important;
-    border: 3px solid #4a8226 !important;
-    border-radius: 8px;
-    box-shadow: 0 4px 0 #3b681d;
-}
-
-.container-filters span,
-.container-filters label {
-    color: #1a330d !important;
-    font-weight: bold;
-}
-
-/* 3. Tarjetas de Pokémon con bordes estilo retro */
-.card-pokemon {
-    background-color: #ffffff !important;
-    border: 3px solid #6b9e42 !important;
-    border-radius: 10px !important;
-    box-shadow: 0 4px 0 #4a8226 !important;
-}
-
-/* 4. Botón de búsqueda y favoritos con tono clásico de los menús */
-.btn-search, 
-#btnFavoritos {
-    background-color: #ffcb05 !important; /* Amarillo clásico Pokémon */
-    color: #2b3b4e !important;
-    border: 2px solid #1a2634 !important;
-    font-weight: bold;
-    box-shadow: 0 3px 0 #1a2634;
-}
-
-.btn-search:hover, 
-#btnFavoritos:hover {
-    background-color: #ffde59 !important;
-}
-
-/* 5. Cabecera (Header) con toque clásico */
-header.container {
-    background-color: #faf5ce;
-    border-bottom: 3px solid #d4cc82;
-    padding-bottom: 15px;
-}
-
-/* ===================================================== */
-/* ESTILO RETRO PARA EL MODAL DE ESTADÍSTICAS            */
-/* ===================================================== */
-
-/* 1. La tarjeta del modal */
-.modal-card {
-    background-color: #faf5ce !important; /* Fondo crema claro estilo menú */
-    border: 4px solid #4a8226 !important;  /* Borde verde clásico */
-    border-radius: 12px !important;
-    box-shadow: 0 6px 0 #2e5217 !important; /* Sombra sólida con relieve */
-}
-
-/* 2. Botón de cerrar (la "X") */
-.close-btn {
-    background-color: #ff5350 !important;
-    color: #ffffff !important;
-    border: 2px solid #b32d2a !important;
-    border-radius: 50%;
-    font-weight: bold;
-    box-shadow: 0 3px 0 #b32d2a;
-}
-
-.close-btn:hover {
-    background-color: #ff7674 !important;
-}
-
-/* 3. Barras de estadísticas con estilo retro y bordes */
-.stat-bar-container {
-    background-color: #e2dca7 !important;
-    border: 2px solid #a8a065 !important;
-    border-radius: 4px !important;
-    overflow: hidden;
-    height: 12px !important;
-}
-
-.stat-bar {
-    background-color: #82c954 !important; /* Verde clásico para el nivel de estadística */
-}
-
-/* 4. Textos y títulos del modal */
-.modal-title {
-    color: #2b3b4e !important;
-    font-weight: bold;
-}
-
-.modal-id {
-    color: #555555 !important;
-    font-weight: bold;
 }

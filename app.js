@@ -1,6 +1,11 @@
+// =====================================================
+// ELEMENTOS PRINCIPALES
+// =====================================================
+
 const listaPokemon = document.querySelector("#listaPokemon");
-const navFilter = document.querySelector("#navFilter");
 const searchInput = document.querySelector("#searchInput");
+const searchForm = document.querySelector("#searchForm");
+
 
 // =====================================================
 // ELEMENTOS DEL MODAL PRINCIPAL
@@ -14,6 +19,11 @@ const modalTitle = document.querySelector("#modalTitle");
 const modalTypes = document.querySelector("#modalTypes");
 const modalStats = document.querySelector("#modalStats");
 
+
+// =====================================================
+// DATOS DE POKÉMON
+// =====================================================
+
 let todosLosPokemones = [];
 
 
@@ -21,15 +31,17 @@ let todosLosPokemones = [];
 // FAVORITOS
 // =====================================================
 
-// Recuperar favoritos guardados
 let favoritos =
     JSON.parse(localStorage.getItem("pokemonFavoritos")) || [];
 
-// Botón Favoritos
+
+// =====================================================
+// ELEMENTOS DEL MODAL DE FAVORITOS
+// =====================================================
+
 const btnFavoritos =
     document.querySelector("#btnFavoritos");
 
-// Elementos del modal de favoritos
 const favoritesOverlay =
     document.querySelector("#favoritesOverlay");
 
@@ -48,12 +60,50 @@ const favoritesCount =
 const noFavorites =
     document.querySelector("#noFavorites");
 
-// Pokémon que actualmente se están mostrando
+
+// =====================================================
+// POKÉMON ACTUALMENTE MOSTRADOS
+// =====================================================
+
 let pokemonesMostrados = [];
 
 
 // =====================================================
-// COMPROBAR SI UN POKÉMON ES FAVORITO
+// PAGINACIÓN
+// =====================================================
+
+let paginaActual = 1;
+
+const pokemonesPorPagina = 20;
+
+
+// =====================================================
+// TIPOS DE POKÉMON
+// =====================================================
+
+const checkboxesTipos = [
+    "grass",
+    "poison",
+    "fire",
+    "flying",
+    "water",
+    "bug",
+    "normal",
+    "electric",
+    "ground",
+    "fairy",
+    "ice",
+    "fighting",
+    "psychic",
+    "rock",
+    "ghost",
+    "dragon",
+    "steel"
+];
+
+
+// =====================================================
+// COMPROBAR FAVORITO
 // =====================================================
 
 function esFavorito(id) {
@@ -85,37 +135,25 @@ function toggleFavorito(id) {
 
     if (favoritos.includes(id)) {
 
-        // Quitar de favoritos
         favoritos = favoritos.filter(
             favoritoId => favoritoId !== id
         );
 
     } else {
 
-        // Agregar a favoritos
         favoritos.push(id);
 
     }
 
-    // Guardar en LocalStorage
     guardarFavoritos();
 
     // Actualizar tarjetas principales
     mostrarPokemones(pokemonesMostrados);
 
-    // Actualizar favoritos
+    // Actualizar ventana de favoritos
     mostrarFavoritos();
 
 }
-
-
-// =====================================================
-// PAGINACIÓN
-// =====================================================
-
-let paginaActual = 1;
-
-const pokemonesPorPagina = 20;
 
 
 // =====================================================
@@ -174,40 +212,148 @@ function traducirStat(stat) {
 
 
 // =====================================================
-// CARGAR LOS PRIMEROS 60 POKÉMON
+// CAPITALIZAR NOMBRE
+// =====================================================
+
+function capitalizarNombre(nombre) {
+
+    return nombre.charAt(0).toUpperCase() +
+        nombre.slice(1);
+
+}
+
+
+// =====================================================
+// OBTENER IMAGEN
+// =====================================================
+
+function obtenerImagen(pokemon) {
+
+    return (
+        pokemon.sprites?.other?.["official-artwork"]?.front_default ||
+        pokemon.sprites?.front_default ||
+        ""
+    );
+
+}
+
+
+// =====================================================
+// CARGAR TODOS LOS POKÉMON
 // =====================================================
 
 async function cargarPokemones() {
 
     try {
 
-        const peticiones = [];
+        console.log("Cargando todos los Pokémon...");
 
-        for (let i = 1; i <= 60; i++) {
+        const respuesta =
+            await fetch(
+                "https://pokeapi.co/api/v2/pokemon?limit=2000"
+            );
 
-            peticiones.push(
-                fetch(
-                    `https://pokeapi.co/api/v2/pokemon/${i}`
-                ).then(res => res.json())
+        if (!respuesta.ok) {
+
+            throw new Error(
+                "No se pudo obtener la lista de Pokémon."
             );
 
         }
 
+        const datos =
+            await respuesta.json();
+
+        console.log(
+            `Se encontraron ${datos.results.length} Pokémon.`
+        );
+
+
+        // =================================================
+        // CARGAR INFORMACIÓN COMPLETA
+        // =================================================
+
+        const peticiones =
+            datos.results.map(
+                pokemon =>
+                    fetch(pokemon.url)
+                        .then(res => {
+
+                            if (!res.ok) {
+
+                                throw new Error(
+                                    `Error cargando ${pokemon.name}`
+                                );
+
+                            }
+
+                            return res.json();
+
+                        })
+            );
+
+
         todosLosPokemones =
             await Promise.all(peticiones);
 
+
+        // =================================================
+        // ORDENAR POR ID
+        // =================================================
+
+        todosLosPokemones.sort(
+            (a, b) => a.id - b.id
+        );
+
+
+        // =================================================
+        // PRIMERA PÁGINA
+        // =================================================
+
         paginaActual = 1;
 
-        mostrarPokemones(todosLosPokemones);
+
+        mostrarPokemones(
+            todosLosPokemones
+        );
+
 
         mostrarFavoritos();
+
+
+        console.log(
+            "Todos los Pokémon fueron cargados correctamente."
+        );
+
 
     } catch (error) {
 
         console.error(
-            "Error al cargar los pokémones:",
+            "Error al cargar los Pokémon:",
             error
         );
+
+
+        if (listaPokemon) {
+
+            listaPokemon.innerHTML = `
+
+                <div class="error-pokemon">
+
+                    <h2>
+                        No se pudieron cargar los Pokémon
+                    </h2>
+
+                    <p>
+                        Revisa tu conexión a Internet
+                        y vuelve a cargar la página.
+                    </p>
+
+                </div>
+
+            `;
+
+        }
 
     }
 
@@ -222,10 +368,42 @@ function mostrarPokemones(pokemones) {
 
     if (!listaPokemon) return;
 
-    // Guardar los Pokémon actuales
+
+    // Guardar Pokémon actuales
     pokemonesMostrados = pokemones;
 
+
+    // Limpiar
     listaPokemon.innerHTML = "";
+
+
+    // =================================================
+    // SIN RESULTADOS
+    // =================================================
+
+    if (pokemones.length === 0) {
+
+        listaPokemon.innerHTML = `
+
+            <div class="sin-resultados">
+
+                <h2>
+                    No se encontraron Pokémon
+                </h2>
+
+                <p>
+                    Intenta cambiar la búsqueda o los filtros.
+                </p>
+
+            </div>
+
+        `;
+
+        actualizarPaginacion(pokemones);
+
+        return;
+
+    }
 
 
     // =================================================
@@ -233,170 +411,241 @@ function mostrarPokemones(pokemones) {
     // =================================================
 
     const inicio =
-        (paginaActual - 1) * pokemonesPorPagina;
+        (paginaActual - 1) *
+        pokemonesPorPagina;
+
 
     const fin =
-        inicio + pokemonesPorPagina;
+        inicio +
+        pokemonesPorPagina;
+
 
     const pokemonesPagina =
-        pokemones.slice(inicio, fin);
+        pokemones.slice(
+            inicio,
+            fin
+        );
 
 
     // =================================================
     // CREAR TARJETAS
     // =================================================
 
-    pokemonesPagina.forEach(pokemon => {
+    pokemonesPagina.forEach(
+        pokemon => {
 
-        const tipos =
-            pokemon.types
-                .map(t =>
-                    `<span class="${t.type.name}">
-                        ${traducirTipo(t.type.name)}
-                    </span>`
-                )
-                .join("");
+            // =================================================
+            // TIPOS
+            // =================================================
 
+            const tipos =
+                pokemon.types
+                    .map(
+                        t => `
 
-        const pokeId =
-            String(pokemon.id).padStart(3, "0");
+                            <span class="${t.type.name}">
+                                ${traducirTipo(t.type.name)}
+                            </span>
 
-
-        const nombreCapitalizado =
-            pokemon.name.charAt(0).toUpperCase() +
-            pokemon.name.slice(1);
-
-
-        const imagen =
-            pokemon.sprites.other["official-artwork"].front_default ||
-            pokemon.sprites.front_default;
+                        `
+                    )
+                    .join("");
 
 
-        const div =
-            document.createElement("div");
+            // =================================================
+            // ID
+            // =================================================
+
+            const pokeId =
+                String(
+                    pokemon.id
+                ).padStart(
+                    3,
+                    "0"
+                );
 
 
-        div.classList.add("card-pokemon");
+            // =================================================
+            // NOMBRE
+            // =================================================
+
+            const nombreCapitalizado =
+                capitalizarNombre(
+                    pokemon.name
+                );
 
 
-        // =================================================
-        // FAVORITO
-        // =================================================
+            // =================================================
+            // IMAGEN
+            // =================================================
 
-        const esFav =
-            esFavorito(pokemon.id);
-
-
-        const corazon =
-            esFav ? "❤️" : "🤍";
+            const imagen =
+                obtenerImagen(
+                    pokemon
+                );
 
 
-        div.innerHTML = `
+            // =================================================
+            // CREAR TARJETA
+            // =================================================
 
-            <button
-                class="boton-favorito ${esFav ? "favorito" : ""}"
-                title="${
-                    esFav
-                        ? "Quitar de favoritos"
-                        : "Agregar a favoritos"
-                }">
-
-                ${corazon}
-
-            </button>
+            const div =
+                document.createElement(
+                    "div"
+                );
 
 
-            <div class="card-img">
-
-                <img
-                    src="${imagen}"
-                    alt="${pokemon.name}">
-
-            </div>
+            div.classList.add(
+                "card-pokemon"
+            );
 
 
-            <div class="card-info">
+            // =================================================
+            // FAVORITO
+            // =================================================
 
-                <span class="pokemon-id">
-                    N° ${pokeId}
-                </span>
+            const esFav =
+                esFavorito(
+                    pokemon.id
+                );
 
-                <h3>
-                    ${nombreCapitalizado}
-                </h3>
 
-                <div class="card-types">
-                    ${tipos}
+            const corazon =
+                esFav
+                    ? "❤️"
+                    : "🤍";
+
+
+            div.innerHTML = `
+
+                <button
+                    class="boton-favorito ${esFav ? "favorito" : ""}"
+                    title="${
+                        esFav
+                            ? "Quitar de favoritos"
+                            : "Agregar a favoritos"
+                    }">
+
+                    ${corazon}
+
+                </button>
+
+
+                <div class="card-img">
+
+                    <img
+                        src="${imagen}"
+                        alt="${nombreCapitalizado}"
+                        loading="lazy">
+
                 </div>
 
-            </div>
 
-        `;
+                <div class="card-info">
 
-
-        // =================================================
-        // BOTÓN FAVORITO
-        // =================================================
-
-        const botonFavorito =
-            div.querySelector(".boton-favorito");
+                    <span class="pokemon-id">
+                        N° ${pokeId}
+                    </span>
 
 
-        if (botonFavorito) {
+                    <h3>
+                        ${nombreCapitalizado}
+                    </h3>
 
-            botonFavorito.addEventListener(
+
+                    <div class="card-types">
+                        ${tipos}
+                    </div>
+
+                </div>
+
+            `;
+
+
+            // =================================================
+            // BOTÓN FAVORITO
+            // =================================================
+
+            const botonFavorito =
+                div.querySelector(
+                    ".boton-favorito"
+                );
+
+
+            if (botonFavorito) {
+
+                botonFavorito.addEventListener(
+                    "click",
+                    e => {
+
+                        e.stopPropagation();
+
+                        toggleFavorito(
+                            pokemon.id
+                        );
+
+                    }
+                );
+
+            }
+
+
+            // =================================================
+            // ABRIR MODAL
+            // =================================================
+
+            div.addEventListener(
                 "click",
-                (e) => {
+                () => {
 
-                    e.stopPropagation();
-
-                    toggleFavorito(pokemon.id);
+                    abrirModal(
+                        pokemon
+                    );
 
                 }
             );
 
+
+            // =================================================
+            // AGREGAR TARJETA
+            // =================================================
+
+            listaPokemon.appendChild(
+                div
+            );
+
         }
+    );
 
 
-        // =================================================
-        // ABRIR MODAL
-        // =================================================
+    // =================================================
+    // ACTUALIZAR PAGINACIÓN
+    // =================================================
 
-        div.addEventListener(
-            "click",
-            () => {
-
-                abrirModal(pokemon);
-
-            }
-        );
-
-
-        listaPokemon.appendChild(div);
-
-    });
-
-
-    // Actualizar paginación
-    actualizarPaginacion(pokemones);
+    actualizarPaginacion(
+        pokemones
+    );
 
 }
 
 
 // =====================================================
-// PAGINACIÓN
+// ACTUALIZAR PAGINACIÓN
 // =====================================================
 
 function actualizarPaginacion(pokemones) {
 
     const paginacion =
-        document.querySelector("#paginacion");
+        document.querySelector(
+            "#paginacion"
+        );
 
 
     if (!paginacion) return;
 
 
     paginacion.innerHTML = "";
+
 
     const totalPaginas =
         Math.ceil(
@@ -405,27 +654,36 @@ function actualizarPaginacion(pokemones) {
         );
 
 
+    // =================================================
+    // OCULTAR SI SOLO HAY UNA
+    // =================================================
+
     if (totalPaginas <= 1) {
 
-        paginacion.style.display = "none";
+        paginacion.style.display =
+            "none";
 
         return;
 
     }
 
 
-    paginacion.style.display = "flex";
+    paginacion.style.display =
+        "flex";
 
 
     // =================================================
-    // ANTERIOR
+    // BOTÓN ANTERIOR
     // =================================================
 
     const botonAnterior =
-        document.createElement("button");
+        document.createElement(
+            "button"
+        );
 
 
-    botonAnterior.textContent = "‹";
+    botonAnterior.textContent =
+        "‹";
 
 
     botonAnterior.disabled =
@@ -440,7 +698,9 @@ function actualizarPaginacion(pokemones) {
 
                 paginaActual--;
 
-                mostrarPokemones(pokemones);
+                mostrarPokemones(
+                    pokemones
+                );
 
                 window.scrollTo({
                     top: 0,
@@ -459,60 +719,103 @@ function actualizarPaginacion(pokemones) {
 
 
     // =================================================
-    // NÚMEROS
+    // NÚMEROS DE PÁGINA
     // =================================================
 
-    for (
-        let pagina = 1;
-        pagina <= totalPaginas;
-        pagina++
-    ) {
-
-        const boton =
-            document.createElement("button");
-
-
-        boton.textContent = pagina;
-
-
-        if (pagina === paginaActual) {
-
-            boton.classList.add("active");
-
-        }
-
-
-        boton.addEventListener(
-            "click",
-            () => {
-
-                paginaActual = pagina;
-
-                mostrarPokemones(pokemones);
-
-                window.scrollTo({
-                    top: 0,
-                    behavior: "smooth"
-                });
-
-            }
+    const paginasAMostrar =
+        obtenerPaginasPaginacion(
+            totalPaginas
         );
 
 
-        paginacion.appendChild(boton);
+    paginasAMostrar.forEach(
+        pagina => {
 
-    }
+            if (pagina === "...") {
+
+                const puntos =
+                    document.createElement(
+                        "span"
+                    );
+
+                puntos.textContent =
+                    "...";
+
+                puntos.classList.add(
+                    "puntos-paginacion"
+                );
+
+                paginacion.appendChild(
+                    puntos
+                );
+
+                return;
+
+            }
+
+
+            const boton =
+                document.createElement(
+                    "button"
+                );
+
+
+            boton.textContent =
+                pagina;
+
+
+            if (
+                pagina ===
+                paginaActual
+            ) {
+
+                boton.classList.add(
+                    "active"
+                );
+
+            }
+
+
+            boton.addEventListener(
+                "click",
+                () => {
+
+                    paginaActual =
+                        pagina;
+
+                    mostrarPokemones(
+                        pokemones
+                    );
+
+                    window.scrollTo({
+                        top: 0,
+                        behavior: "smooth"
+                    });
+
+                }
+            );
+
+
+            paginacion.appendChild(
+                boton
+            );
+
+        }
+    );
 
 
     // =================================================
-    // SIGUIENTE
+    // BOTÓN SIGUIENTE
     // =================================================
 
     const botonSiguiente =
-        document.createElement("button");
+        document.createElement(
+            "button"
+        );
 
 
-    botonSiguiente.textContent = "›";
+    botonSiguiente.textContent =
+        "›";
 
 
     botonSiguiente.disabled =
@@ -523,11 +826,16 @@ function actualizarPaginacion(pokemones) {
         "click",
         () => {
 
-            if (paginaActual < totalPaginas) {
+            if (
+                paginaActual <
+                totalPaginas
+            ) {
 
                 paginaActual++;
 
-                mostrarPokemones(pokemones);
+                mostrarPokemones(
+                    pokemones
+                );
 
                 window.scrollTo({
                     top: 0,
@@ -548,6 +856,89 @@ function actualizarPaginacion(pokemones) {
 
 
 // =====================================================
+// PÁGINAS INTELIGENTES
+// =====================================================
+
+function obtenerPaginasPaginacion(
+    totalPaginas
+) {
+
+    const paginas = [];
+
+
+    if (totalPaginas <= 7) {
+
+        for (
+            let i = 1;
+            i <= totalPaginas;
+            i++
+        ) {
+
+            paginas.push(i);
+
+        }
+
+        return paginas;
+
+    }
+
+
+    paginas.push(1);
+
+
+    if (paginaActual > 4) {
+
+        paginas.push("...");
+
+    }
+
+
+    const inicio =
+        Math.max(
+            2,
+            paginaActual - 2
+        );
+
+
+    const fin =
+        Math.min(
+            totalPaginas - 1,
+            paginaActual + 2
+        );
+
+
+    for (
+        let i = inicio;
+        i <= fin;
+        i++
+    ) {
+
+        paginas.push(i);
+
+    }
+
+
+    if (
+        paginaActual <
+        totalPaginas - 3
+    ) {
+
+        paginas.push("...");
+
+    }
+
+
+    paginas.push(
+        totalPaginas
+    );
+
+
+    return paginas;
+
+}
+
+
+// =====================================================
 // MODAL PRINCIPAL
 // =====================================================
 
@@ -556,105 +947,148 @@ function abrirModal(pokemon) {
     if (!modalOverlay) return;
 
 
-    // Imagen
+    // =================================================
+    // IMAGEN
+    // =================================================
+
     if (modalImg) {
 
         modalImg.src =
-            pokemon.sprites.other["official-artwork"].front_default ||
-            pokemon.sprites.front_default;
+            obtenerImagen(
+                pokemon
+            );
+
+        modalImg.alt =
+            capitalizarNombre(
+                pokemon.name
+            );
 
     }
 
 
+    // =================================================
     // ID
+    // =================================================
+
     if (modalId) {
 
         modalId.textContent =
-            `N° ${String(pokemon.id).padStart(3, "0")}`;
+            `N° ${
+                String(
+                    pokemon.id
+                ).padStart(
+                    3,
+                    "0"
+                )
+            }`;
 
     }
 
 
-    // Nombre
+    // =================================================
+    // NOMBRE
+    // =================================================
+
     if (modalTitle) {
 
         modalTitle.textContent =
-            pokemon.name.charAt(0).toUpperCase() +
-            pokemon.name.slice(1);
+            capitalizarNombre(
+                pokemon.name
+            );
 
     }
 
 
-    // Tipos
+    // =================================================
+    // TIPOS
+    // =================================================
+
     if (modalTypes) {
 
         modalTypes.innerHTML =
             pokemon.types
-                .map(t =>
-                    `<span class="${t.type.name}">
-                        ${traducirTipo(t.type.name)}
-                    </span>`
+                .map(
+                    t => `
+
+                        <span class="${t.type.name}">
+                            ${traducirTipo(t.type.name)}
+                        </span>
+
+                    `
                 )
                 .join("");
 
     }
 
 
-    // Estadísticas
+    // =================================================
+    // ESTADÍSTICAS
+    // =================================================
+
     if (modalStats) {
 
         modalStats.innerHTML = "";
 
 
-        pokemon.stats.forEach(stat => {
+        pokemon.stats.forEach(
+            stat => {
 
-            const nombreStat =
-                traducirStat(
-                    stat.stat.name
-                );
-
-
-            const valorStat =
-                stat.base_stat;
+                const nombreStat =
+                    traducirStat(
+                        stat.stat.name
+                    );
 
 
-            modalStats.innerHTML += `
-
-                <div class="stat-row">
-
-                    <span>
-                        ${nombreStat}
-                    </span>
-
-                    <span>
-                        ${valorStat}
-                    </span>
-
-                </div>
+                const valorStat =
+                    stat.base_stat;
 
 
-                <div class="stat-bar-container">
+                const porcentaje =
+                    Math.min(
+                        valorStat,
+                        100
+                    );
 
-                    <div
-                        class="stat-bar"
-                        style="width: ${
-                            Math.min(
-                                valorStat,
-                                100
-                            )
-                        }%;">
+
+                modalStats.innerHTML += `
+
+                    <div class="stat-row">
+
+                        <span>
+                            ${nombreStat}
+                        </span>
+
+                        <span>
+                            ${valorStat}
+                        </span>
+
                     </div>
 
-                </div>
 
-            `;
+                    <div class="stat-bar-container">
 
-        });
+                        <div
+                            class="stat-bar"
+                            style="width: ${porcentaje}%;">
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+        );
 
     }
 
 
-    modalOverlay.classList.add("active");
+    // =================================================
+    // MOSTRAR MODAL
+    // =================================================
+
+    modalOverlay.classList.add(
+        "active"
+    );
 
 }
 
@@ -667,7 +1101,9 @@ async function abrirModalPorId(id) {
 
     const pokemonEnMemoria =
         todosLosPokemones.find(
-            p => p.id === Number(id)
+            pokemon =>
+                pokemon.id ===
+                Number(id)
         );
 
 
@@ -690,17 +1126,28 @@ async function abrirModalPorId(id) {
             );
 
 
+        if (!response.ok) {
+
+            throw new Error(
+                "Pokémon no encontrado"
+            );
+
+        }
+
+
         const pokemon =
             await response.json();
 
 
-        abrirModal(pokemon);
+        abrirModal(
+            pokemon
+        );
 
 
     } catch (error) {
 
         console.error(
-            "No se pudo abrir el modal por ID:",
+            "No se pudo abrir el modal:",
             error
         );
 
@@ -733,9 +1180,12 @@ if (modalOverlay) {
 
     modalOverlay.addEventListener(
         "click",
-        (e) => {
+        e => {
 
-            if (e.target === modalOverlay) {
+            if (
+                e.target ===
+                modalOverlay
+            ) {
 
                 modalOverlay.classList.remove(
                     "active"
@@ -750,104 +1200,45 @@ if (modalOverlay) {
 
 
 // =====================================================
-// FILTROS DEL NAV
+// ESC PARA CERRAR MODALES
 // =====================================================
 
-if (navFilter) {
+document.addEventListener(
+    "keydown",
+    e => {
 
-    navFilter.addEventListener(
-        "click",
-        (e) => {
-
-            if (
-                !e.target.classList.contains(
-                    "btn-header"
-                )
-            ) {
-
-                return;
-
-            }
+        if (e.key !== "Escape") return;
 
 
-            const botones =
-                navFilter.querySelectorAll(
-                    ".btn-header"
-                );
+        if (
+            modalOverlay &&
+            modalOverlay.classList.contains(
+                "active"
+            )
+        ) {
 
-
-            botones.forEach(btn =>
-                btn.classList.remove(
-                    "active"
-                )
-            );
-
-
-            e.target.classList.add(
+            modalOverlay.classList.remove(
                 "active"
             );
 
-
-            const tipoSeleccionado =
-                e.target.getAttribute(
-                    "data-type"
-                );
+        }
 
 
-            paginaActual = 1;
+        if (
+            favoritesOverlay &&
+            favoritesOverlay.classList.contains(
+                "active"
+            )
+        ) {
 
-
-            if (
-                tipoSeleccionado === "all"
-            ) {
-
-                mostrarPokemones(
-                    todosLosPokemones
-                );
-
-            } else {
-
-                const filtrados =
-                    todosLosPokemones.filter(
-                        pokemon =>
-                            pokemon.types.some(
-                                t =>
-                                    t.type.name ===
-                                    tipoSeleccionado
-                            )
-                    );
-
-
-                mostrarPokemones(
-                    filtrados
-                );
-
-            }
+            favoritesOverlay.classList.remove(
+                "active"
+            );
 
         }
-    );
 
-}
-
-
-// =====================================================
-// CHECKBOX DE TIPOS
-// =====================================================
-
-const checkboxesTipos = [
-
-    "grass",
-    "poison",
-    "fire",
-    "flying",
-    "water",
-    "bug",
-    "normal",
-    "electric",
-    "ground",
-    "fairy"
-
-];
+    }
+);
 
 
 // =====================================================
@@ -859,24 +1250,28 @@ function obtenerTiposSeleccionados() {
     const tiposSeleccionados = [];
 
 
-    checkboxesTipos.forEach(tipo => {
+    checkboxesTipos.forEach(
+        tipo => {
 
-        const checkbox =
-            document.getElementById(tipo);
+            const checkbox =
+                document.getElementById(
+                    tipo
+                );
 
 
-        if (
-            checkbox &&
-            checkbox.checked
-        ) {
+            if (
+                checkbox &&
+                checkbox.checked
+            ) {
 
-            tiposSeleccionados.push(
-                tipo
-            );
+                tiposSeleccionados.push(
+                    tipo
+                );
+
+            }
 
         }
-
-    });
+    );
 
 
     return tiposSeleccionados;
@@ -935,10 +1330,12 @@ function aplicarFiltros() {
 
 
     // =================================================
-    // FILTRO POR BÚSQUEDA
+    // FILTRO POR NOMBRE O ID
     // =================================================
 
-    if (termino !== "") {
+    if (
+        termino !== ""
+    ) {
 
         filtrados =
             filtrados.filter(
@@ -949,12 +1346,18 @@ function aplicarFiltros() {
 
 
                     const id =
-                        String(pokemon.id);
+                        String(
+                            pokemon.id
+                        );
 
 
                     return (
-                        nombre.includes(termino) ||
-                        id.includes(termino)
+                        nombre.includes(
+                            termino
+                        ) ||
+                        id.includes(
+                            termino
+                        )
                     );
 
                 }
@@ -963,7 +1366,10 @@ function aplicarFiltros() {
     }
 
 
-    // Mostrar resultados
+    // =================================================
+    // MOSTRAR RESULTADOS
+    // =================================================
+
     mostrarPokemones(
         filtrados
     );
@@ -975,30 +1381,34 @@ function aplicarFiltros() {
 // ACTIVAR CHECKBOX
 // =====================================================
 
-checkboxesTipos.forEach(tipo => {
+checkboxesTipos.forEach(
+    tipo => {
 
-    const checkbox =
-        document.getElementById(tipo);
+        const checkbox =
+            document.getElementById(
+                tipo
+            );
 
 
-    if (checkbox) {
+        if (checkbox) {
 
-        checkbox.addEventListener(
-            "change",
-            () => {
+            checkbox.addEventListener(
+                "change",
+                () => {
 
-                aplicarFiltros();
+                    aplicarFiltros();
 
-            }
-        );
+                }
+            );
+
+        }
 
     }
-
-});
+);
 
 
 // =====================================================
-// BARRA DE BÚSQUEDA
+// BÚSQUEDA EN TIEMPO REAL
 // =====================================================
 
 if (searchInput) {
@@ -1006,6 +1416,26 @@ if (searchInput) {
     searchInput.addEventListener(
         "input",
         () => {
+
+            aplicarFiltros();
+
+        }
+    );
+
+}
+
+
+// =====================================================
+// FORMULARIO DE BÚSQUEDA
+// =====================================================
+
+if (searchForm) {
+
+    searchForm.addEventListener(
+        "submit",
+        e => {
+
+            e.preventDefault();
 
             aplicarFiltros();
 
@@ -1028,11 +1458,9 @@ if (btnFavoritos) {
             if (!favoritesOverlay) return;
 
 
-            // Actualizar antes de abrir
             mostrarFavoritos();
 
 
-            // Abrir modal
             favoritesOverlay.classList.add(
                 "active"
             );
@@ -1071,10 +1499,11 @@ if (favoritesOverlay) {
 
     favoritesOverlay.addEventListener(
         "click",
-        (e) => {
+        e => {
 
             if (
-                e.target === favoritesOverlay
+                e.target ===
+                favoritesOverlay
             ) {
 
                 favoritesOverlay.classList.remove(
@@ -1090,7 +1519,7 @@ if (favoritesOverlay) {
 
 
 // =====================================================
-// MOSTRAR LISTA DE FAVORITOS
+// MOSTRAR FAVORITOS
 // =====================================================
 
 function mostrarFavoritos() {
@@ -1098,12 +1527,15 @@ function mostrarFavoritos() {
     if (!favoritesList) return;
 
 
-    // Limpiar lista
+    // =================================================
+    // LIMPIAR
+    // =================================================
+
     favoritesList.innerHTML = "";
 
 
     // =================================================
-    // BUSCAR POKÉMON FAVORITOS
+    // BUSCAR FAVORITOS
     // =================================================
 
     const pokemonesFavoritos =
@@ -1116,7 +1548,7 @@ function mostrarFavoritos() {
 
 
     // =================================================
-    // ACTUALIZAR CONTADOR
+    // CONTADOR
     // =================================================
 
     if (favoritesCount) {
@@ -1128,7 +1560,7 @@ function mostrarFavoritos() {
 
 
     // =================================================
-    // MOSTRAR / OCULTAR MENSAJE
+    // MENSAJE SIN FAVORITOS
     // =================================================
 
     if (noFavorites) {
@@ -1155,7 +1587,7 @@ function mostrarFavoritos() {
 
 
     // =================================================
-    // CREAR TARJETAS
+    // CREAR TARJETAS DE FAVORITOS
     // =================================================
 
     pokemonesFavoritos.forEach(
@@ -1173,23 +1605,24 @@ function mostrarFavoritos() {
 
 
             const nombreCapitalizado =
-                pokemon.name
-                    .charAt(0)
-                    .toUpperCase() +
-                pokemon.name.slice(1);
+                capitalizarNombre(
+                    pokemon.name
+                );
 
 
             const pokeId =
                 String(
                     pokemon.id
-                ).padStart(3, "0");
+                ).padStart(
+                    3,
+                    "0"
+                );
 
 
             const imagen =
-                pokemon.sprites.other[
-                    "official-artwork"
-                ].front_default ||
-                pokemon.sprites.front_default;
+                obtenerImagen(
+                    pokemon
+                );
 
 
             tarjeta.innerHTML = `
@@ -1205,7 +1638,8 @@ function mostrarFavoritos() {
 
                 <img
                     src="${imagen}"
-                    alt="${pokemon.name}">
+                    alt="${nombreCapitalizado}"
+                    loading="lazy">
 
 
                 <span class="pokemon-id">
@@ -1230,18 +1664,22 @@ function mostrarFavoritos() {
                 );
 
 
-            boton.addEventListener(
-                "click",
-                (e) => {
+            if (boton) {
 
-                    e.stopPropagation();
+                boton.addEventListener(
+                    "click",
+                    e => {
 
-                    toggleFavorito(
-                        pokemon.id
-                    );
+                        e.stopPropagation();
 
-                }
-            );
+                        toggleFavorito(
+                            pokemon.id
+                        );
+
+                    }
+                );
+
+            }
 
 
             // =================================================
@@ -1275,29 +1713,3 @@ function mostrarFavoritos() {
 // =====================================================
 
 cargarPokemones();
-
-
-// =====================================================
-// FORMULARIO DE BÚSQUEDA
-// =====================================================
-
-if (searchInput) {
-
-    const form =
-        searchInput.closest("form");
-
-
-    if (form) {
-
-        form.addEventListener(
-            "submit",
-            (e) => {
-
-                e.preventDefault();
-
-            }
-        );
-
-    }
-
-}
